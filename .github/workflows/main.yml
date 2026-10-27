@@ -11,17 +11,20 @@ jobs:
       - name: Clonar código
         uses: actions/checkout@v4
 
-      - name: Configurar Java
+      - name: Configurar Java 8
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '8' 
 
-      - name: Dar permisos al compilador
+      - name: Dar permisos a Gradle
         run: chmod +x ./gradlew
 
-      - name: Compilar APK (Ensamblar)
-        run: ./gradlew assembleDebug
+      - name: Compilar APK con Setup de Android
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+          arguments: assembleDebug
 
       - name: Subir APK final
         uses: actions/upload-artifact@v4
